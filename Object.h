@@ -23,11 +23,12 @@ public:
 	virtual void Draw();
 
 public:
-	Vector2* GetPos();
-	float GetRange();
-	virtual void HitAction();
-	Vector2 VSub(Vector2 vec1, Vector2 vec2);
-	float VSquareSize(Vector2 vec);
-	void ChackHitCircle(Object* obj1, Object* obj2);
+	Vector2 GetPos()const;
+	float GetRadius()const;
+	float GetRange()const;
+	bool GetIsAlive()const;
+	
+	bool ChackHitCircle();
+	
 };
 

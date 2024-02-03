@@ -4,8 +4,8 @@
 
 void CTitle::Update()
 {
-	if (manager->GetKey()[DIK_RETURN]) {
-		manager->scene = new CGame(manager);
+	if (manager_->GetKey()[DIK_RETURN]) {
+		manager_->scene = new CGame(manager_);
 		delete this;
 	}
 }

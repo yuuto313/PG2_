@@ -7,10 +7,10 @@ class CManager;
 class CScene
 {
 protected:
-	CManager* manager;
+	CManager* manager_;
 
 public:
-	CScene(CManager* pManager) { manager = pManager; };
+	CScene(CManager* pManager) { manager_ = pManager; };
 	virtual~CScene() {};
 
 	virtual void Update();
@@ -21,6 +21,7 @@ public:
 class CManager
 {
 	char* key;
+
 
 public:
 	CScene* scene;

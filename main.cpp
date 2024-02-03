@@ -2,6 +2,7 @@
 
 #include "SceneManager.h"
 #include "Title.h"
+#include "Game.h"
 
 #include "Player.h"
 #include "EnemyManager.h"
@@ -19,8 +20,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
 	Player* player = new Player();
+	//Enemy* enemy;
 	EnemyManager* enemyManager = new EnemyManager();
 	CManager* manager;
+
+	std::vector<Bullet*> playerBullet_;
+	std::vector<Bullet*> enemyBullet_;
+
+	Vector2 range = {};
+	float distance = {};
+	float radius = {};
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -42,20 +51,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		
+
 		manager->Update();
 		player->Update(keys);
 		enemyManager->Update();
-		
+
+
 		player->GetBullets();
+		//enemy->GetBullets();
+
 		enemyManager->GetEnemy();
+		player->GetPlayer();
 
-		for (int i = 0; i < player->GetBullets().size(); i++) {
-			Vector2 range = *player->GetBullets()[i]->GetPos(); 
-			Vector2 range = *enemyManager->GetEnemy()[i].GetPos();
+		if (player->GetBullets().size() > 0) {
+			for (int i = 0; i < player->GetBullets().size(); i++) {
+				for (int j = 0; j < ENEMY_NUM; j++) {
 
+					range = (player->GetBullets()[i]->GetPos()) - (enemyManager->GetEnemy()[j]->GetPos());
+					distance = (range.x * range.x) + (range.y * range.y);
+					radius = (player->GetBullets()[i]->GetRadius()) + (enemyManager->GetEnemy()[j]->GetRadius());
+
+					if (distance <= radius * radius) {
+						enemyManager->GetEnemy()[j]->ChackHitCircle();
+					}
+
+				}
+			}
 		}
-
+	
+		
 
 		///
 		/// ↑更新処理ここまで
@@ -64,6 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		manager->Draw();
 		player->Draw();
 		enemyManager->Draw();
+		
 
 		///
 		/// ↓描画処理ここから
@@ -81,6 +106,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 	}
+
+	delete player;
+	delete enemyManager;
+	delete manager;
 
 	// ライブラリの終了
 	Novice::Finalize();

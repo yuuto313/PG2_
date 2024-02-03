@@ -52,6 +52,7 @@ void Player::BulletUpdate(char* keys)
 	if (keys[DIK_SPACE] && coolDown_ == 0) {
 		bullets_.push_back(new Bullet(pos_));
 		coolDown_ = 18;
+		
 	}
 
 	if (coolDown_ >= 1) {

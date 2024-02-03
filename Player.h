@@ -16,9 +16,10 @@ public:
     void Draw()override;
 
     std::vector<Bullet*> GetBullets() { return bullets_; };
-
+    std::vector<Player*> GetPlayer() { return player_; };
 private:
     std::vector<Bullet*> bullets_;
+    std::vector<Player*> player_;
 };
 
 
